@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Cámara HTML5</title>
+  </head>
+  <body>
+    <video id="video" width="640" height="480" autoplay></video>
+    <br><br>
+    <button id="snap">Tomar foto</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+      const video = document.getElementById("video");
+      const canvas = document.getElementById("canvas");
+      const snap = document.getElementById("snap");
+      const context = canvas.getContext("2d");
+
+      navigator.mediaDevices
+        .getUserMedia({ video: true, audio: false })
+        .then(stream => {
+          video.srcObject = stream;
+        })
+        .catch(error => {
+          console.error("Oops. Algo salió mal.", error);
+        });
+
+      snap.addEventListener("click", function() {
+        context.drawImage(video, 0, 0, 640, 480);
+      });
+    </script>
+  </body>
+</html>
